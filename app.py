@@ -20,7 +20,7 @@ if file:
     img = PILImage.create(file) 
 
     #model
-    model = load_learner('mixture.pkl')
+    model = load_learner('mixture_new.pkl')
 
     #predict
     pred, pred_id, probs = model.predict(img) 
