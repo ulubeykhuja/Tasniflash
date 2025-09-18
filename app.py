@@ -1,13 +1,15 @@
 import streamlit as st
 from fastai.vision.all import *
-from fastai.vision.all import PILImage
-from fastai.learner import load_learner
+#from fastai.vision.all import PILImage
+#from fastai.learner import load_learner
 import pathlib
 import plotly.express as px
 import platform
 
 plt = platform.system()
-if plt == 'Linux': pathlib.WindowsPath = pathlib.PosixPath 
+if plt in ('Linux', 'Darwin'):
+    pathlib.WindowsPath = pathlib.PosixPath
+    
 #title
 st.title("Door, Drink or Telefhone?")
 
