@@ -1,36 +1,39 @@
-from pathlib import Path
-import io
 import streamlit as st
 from fastai.vision.all import *
+from fastai.vision.all import PILImage
+from fastai.learner import load_learner
+import plotly.express as px
+import pathlib
+temp = pathlib.PosixPath
+pathlib.PosixPath = pathlib.WindowsPath
 
-st.title("Door, Drink or Telephone?")
-st.markdown("""
-**Bu ilova eshik, ichimlik yoki telefon rasmni klassifikatsiya qiladi.**  
-Quyidagi tugma orqali rasm yuklang va natijani kuting.
-""")
+#title
+st.title("Door, Drink or Telefhone?")
 
-MODEL_PATH = Path(__file__).parent / "mixture.pkl"
+st.markdown(
+    """
+    **Bu ilova eshik, ichimlik yoki telefon rasmni klassifikatsiya qiladi.**  
+    Quyidagi tugma orqali rasm yuklang va natijani kuting.
+    """
+)
 
-file = st.file_uploader("Rasm yuklash", type=["png","jpeg","jpg","gif","svg"])
+#rasmni joylash
+file = st.file_uploader('Rasm yuklash',  type=['png', 'jpeg', 'gif', 'svg'])
 if file:
-    st.image(file, caption="Yuklangan rasm", use_container_width=True)
+    st.image(file)
+    # PIL convert
+    img = PILImage.create(file) 
 
-    try:
-        img = PILImage.create(io.BytesIO(file.read()))
-    except Exception as e:
-        st.error("Rasmni o‘qishda xatolik.")
-        st.exception(e)
-        st.stop()
+    #model
+    model = load_learner('mixture.pkl')
 
-    try:
-        learn = load_learner(MODEL_PATH)
-        pred, pred_id, probs = learn.predict(img)
-        st.success(f"Bashorat: {pred}")
-        st.info(f"Ehtimollik: {probs[pred_id]*100:.1f}%")
+    #predict
+    pred, pred_id, probs = model.predict(img) 
+    st.success(f"Bashorat: {pred}")
+    st.info(f"Ehtimollik: {probs[pred_id]*100:.1f}")
 
-        import plotly.express as px
-        st.plotly_chart(px.bar(x=probs*100, y=learn.dls.vocab, orientation="h"),
-                        use_container_width=True)
-    except Exception as e:
-        st.error("Predict bosqichida xato yuz berdi.")
-        st.exception(e)
+    #plotting
+    fig = px.bar(x=probs*100, 
+                 y=model.dls.vocab,
+                 orientation='h')
+    st.plotly_chart(fig)
