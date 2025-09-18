@@ -21,7 +21,7 @@ if file:
 
     # Model
     try:
-        model = load_learner('/mount/src/tasniflash/mixture.pkl', map_location=torch.device('cpu'))
+        model = load_learner('/mount/src/tasniflash/mixture.pkl')  # Файл йўлини ўзингизга мослаштиринг
     except Exception as e:
         st.error(f"Modelni yuklashda xato: {e}")
         st.stop()
