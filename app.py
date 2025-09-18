@@ -13,13 +13,14 @@ MODEL_PATH = Path(__file__).parent / "mixture.pkl"
 
 file = st.file_uploader("Rasm yuklash", type=["png","jpeg","jpg","gif","svg"])
 if file:
-    st.image(file, caption="Yuklangan rasm", use_column_width=True)
+    st.image(file, caption="Yuklangan rasm", use_container_width=True)
 
     try:
         img = PILImage.create(io.BytesIO(file.read()))
     except Exception as e:
         st.error("Rasmni o‘qishda xatolik.")
-        st.exception(e); st.stop()
+        st.exception(e)
+        st.stop()
 
     try:
         learn = load_learner(MODEL_PATH)
