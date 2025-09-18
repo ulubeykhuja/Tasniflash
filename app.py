@@ -1,9 +1,14 @@
 import streamlit as st
 from fastai.vision.all import *
+#from fastai.vision.all import PILImage
+#from fastai.learner import load_learner
 import plotly.express as px
+# import pathlib
+# temp = pathlib.PosixPath
+# pathlib.PosixPath = pathlib.WindowsPath
 
-# Title
-st.title("Door, Drink or Telephone?")
+#title
+st.title("Door, Drink or Telefhone?")
 
 st.markdown(
     """
@@ -12,26 +17,22 @@ st.markdown(
     """
 )
 
-# Rasmni joylash
-file = st.file_uploader('Rasm yuklash', type=['png', 'jpeg', 'gif', 'svg'])
+#rasmni joylash
+file = st.file_uploader('Rasm yuklash',  type=['png', 'jpeg', 'gif', 'svg'])
 if file:
     st.image(file)
     # PIL convert
     img = PILImage.create(file) 
 
-    # Model
-    try:
-        model = load_learner('/mount/src/tasniflash/mixture.pkl')  # Файл йўлини ўзингизга мослаштиринг
-    except Exception as e:
-        st.error(f"Modelni yuklashda xato: {e}")
-        st.stop()
+    #model
+    model = load_learner('mixture.pkl')
 
-    # Predict
+    #predict
     pred, pred_id, probs = model.predict(img) 
     st.success(f"Bashorat: {pred}")
     st.info(f"Ehtimollik: {probs[pred_id]*100:.1f}")
 
-    # Plotting
+    #plotting
     fig = px.bar(x=probs*100, 
                  y=model.dls.vocab,
                  orientation='h')
