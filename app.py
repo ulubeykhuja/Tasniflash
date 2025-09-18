@@ -4,9 +4,9 @@ from fastai.vision.all import *
 #from fastai.learner import load_learner
 import pathlib
 import plotly.express as px
-import platform
+#import platform
 
-plt = platform.system()
+#plt = platform.system()
 #if plt in ('Linux', 'Darwin'):
 #    pathlib.WindowsPath = pathlib.PosixPath
     
