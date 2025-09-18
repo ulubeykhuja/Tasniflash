@@ -7,7 +7,7 @@ import plotly.express as px
 import platform
 
 plt = platform.system()
-if plt == 'Linux': pathlib.WindowsPath = p athlib.PosixPath 
+if plt == 'Linux': pathlib.WindowsPath = pathlib.PosixPath 
 #title
 st.title("Door, Drink or Telefhone?")
 
