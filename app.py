@@ -1,3 +1,7 @@
+import platform, pathlib
+if platform.system() in ("Linux", "Darwin"):
+    pathlib.WindowsPath = pathlib.PosixPath
+    
 import streamlit as st
 from fastai.vision.all import *
 #from fastai.vision.all import PILImage
