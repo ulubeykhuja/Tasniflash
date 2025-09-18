@@ -1,21 +1,9 @@
-import platform, pathlib
-if platform.system() in ("Linux", "Darwin"):
-    pathlib.WindowsPath = pathlib.PosixPath
-    
 import streamlit as st
 from fastai.vision.all import *
-#from fastai.vision.all import PILImage
-#from fastai.learner import load_learner
-import pathlib
 import plotly.express as px
-#import platform
 
-#plt = platform.system()
-#if plt in ('Linux', 'Darwin'):
-#    pathlib.WindowsPath = pathlib.PosixPath
-    
-#title
-st.title("Door, Drink or Telefhone?")
+# Title
+st.title("Door, Drink or Telephone?")
 
 st.markdown(
     """
@@ -24,22 +12,22 @@ st.markdown(
     """
 )
 
-#rasmni joylash
-file = st.file_uploader('Rasm yuklash',  type=['png', 'jpeg', 'gif', 'svg'])
+# Rasmni joylash
+file = st.file_uploader('Rasm yuklash', type=['png', 'jpeg', 'gif', 'svg'])
 if file:
     st.image(file)
     # PIL convert
     img = PILImage.create(file) 
 
-    #model
+    # Model
     model = load_learner('mixture.pkl')
 
-    #predict
+    # Predict
     pred, pred_id, probs = model.predict(img) 
     st.success(f"Bashorat: {pred}")
     st.info(f"Ehtimollik: {probs[pred_id]*100:.1f}")
 
-    #plotting
+    # Plotting
     fig = px.bar(x=probs*100, 
                  y=model.dls.vocab,
                  orientation='h')
