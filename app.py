@@ -20,7 +20,11 @@ if file:
     img = PILImage.create(file) 
 
     # Model
-    model = load_learner('mixture.pkl')
+    try:
+        model = load_learner('/mount/src/tasniflash/mixture.pkl', map_location=torch.device('cpu'))
+    except Exception as e:
+        st.error(f"Modelni yuklashda xato: {e}")
+        st.stop()
 
     # Predict
     pred, pred_id, probs = model.predict(img) 
