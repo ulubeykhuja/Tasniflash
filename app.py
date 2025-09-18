@@ -1,11 +1,6 @@
 import streamlit as st
 from fastai.vision.all import *
-#from fastai.vision.all import PILImage
-#from fastai.learner import load_learner
 import plotly.express as px
-# import pathlib
-# temp = pathlib.PosixPath
-# pathlib.PosixPath = pathlib.WindowsPath
 
 #title
 st.title("Door, Drink or Telefhone?")
